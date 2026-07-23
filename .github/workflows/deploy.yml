@@ -28,7 +28,7 @@ jobs:
       - run: npm run validate
       - run: npm run build
         env:
-          DEPLOY_BASE: /linga_quest/
+          DEPLOY_BASE: /${{ github.event.repository.name }}/
       - uses: actions/configure-pages@v5
         with:
           enablement: true

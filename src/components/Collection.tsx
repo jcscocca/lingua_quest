@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react'
 import type { Deck, DeckItem } from '../lib/deck'
 import { useEngine } from '../lib/engine'
+import type { LangInfo } from '../lib/lang'
 import type { ItemState } from '../lib/srs'
 import { SpeakButton } from './SpeakButton'
 
-export function Collection({ deck, voice, onBack }: {
+export function Collection({ deck, lang, onBack }: {
   deck: Deck
-  voice: string
+  lang: LangInfo
   onBack: () => void
 }) {
   const states = useEngine(s => s.states)
@@ -44,7 +45,7 @@ export function Collection({ deck, voice, onBack }: {
 
       <div className="vocab-grid">
         {filtered.map(item => (
-          <VocabCard key={item.id} item={item} voice={voice} state={states[item.id]} />
+          <VocabCard key={item.id} item={item} voice={lang.locale} state={states[item.id]} />
         ))}
         {filtered.length === 0 && <p className="empty">No matches for “{q}”.</p>}
       </div>

@@ -16,6 +16,13 @@ describe('foldAccents', () => {
     expect(foldAccents('español')).toBe('español')
     expect(foldAccents('año')).toBe('año')
   })
+  it('folds the French diacritics too', () => {
+    expect(foldAccents('être où ça déjà')).toBe('etre ou ca deja')
+    expect(foldAccents('hôtel goût très même')).toBe('hotel gout tres meme')
+  })
+  it('folds French ligatures to their ASCII spelling', () => {
+    expect(foldAccents('sœur')).toBe('soeur')
+  })
 })
 
 describe('checkText', () => {
@@ -26,6 +33,11 @@ describe('checkText', () => {
     const r = checkText('como estas', ['cómo estás'])
     expect(r.correct).toBe(true)
     expect(r.note).toContain('cómo estás')
+  })
+  it('accepts a French answer typed without its accents', () => {
+    const r = checkText('etre', ['être'])
+    expect(r.correct).toBe(true)
+    expect(r.note).toContain('être')
   })
   it('rejects a wrong answer', () => {
     expect(checkText('hola', ['adiós']).correct).toBe(false)

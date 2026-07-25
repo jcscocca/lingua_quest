@@ -6,6 +6,7 @@
 import { create } from 'zustand'
 import { clear, createStore, entries, get as idbGet, set as idbSet, setMany, type UseStore } from 'idb-keyval'
 import { todayString } from './xp'
+import { LANGS } from './lang'
 import { isStrong, newState, schedule, type ItemState } from './srs'
 
 export interface Profile {
@@ -84,8 +85,6 @@ export function strongCount(states: Record<string, ItemState>, today: string): n
 export function estimatedVocab(profile: Profile, lang: string): number {
   return profile.frontier[lang] ?? 0
 }
-
-export const LANGS = ['es', 'fr'] as const
 
 export interface ExportFile {
   version: 2

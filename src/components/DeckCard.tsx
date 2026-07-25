@@ -1,11 +1,12 @@
 // One vocabulary card in one of three escalating modes. choice = recognize the
-// English gloss; type = produce the Spanish lemma from its meaning; audio =
-// produce the Spanish lemma from hearing it (falls back to a visible-text
+// English gloss; type = produce the target-language lemma from its meaning;
+// audio = produce it from hearing it (falls back to a visible-text
 // transcription task when the browser has no TTS). Grading is delegated to
 // cards.ts so this component only owns presentation and local answer state.
 
 import { useEffect, useMemo, useState } from 'react'
 import type { Deck, DeckItem } from '../lib/deck'
+import type { LangInfo } from '../lib/lang'
 import type { TestMode } from '../lib/srs'
 import { choiceOptions, gradeCard } from '../lib/cards'
 import { speak, speechSupported } from '../lib/speech'
@@ -13,11 +14,11 @@ import { SpeakButton } from './SpeakButton'
 
 const MODE_LABEL: Record<TestMode, string> = { choice: 'Choice', type: 'Type', audio: 'Audio' }
 
-export function DeckCard({ deck, item, mode, voice, onGraded }: {
+export function DeckCard({ deck, item, mode, lang, onGraded }: {
   deck: Deck
   item: DeckItem
   mode: TestMode
-  voice: string
+  lang: LangInfo
   onGraded: (correct: boolean) => void
 }) {
   // Keyed off item.id so a parent that reuses (rather than remounts) this
@@ -37,8 +38,8 @@ export function DeckCard({ deck, item, mode, voice, onGraded }: {
   const audioBroken = mode === 'audio' && !speechSupported()
 
   useEffect(() => {
-    if (mode === 'audio' && speechSupported()) speak(item.lemma, voice)
-  }, [item.id, mode, voice])
+    if (mode === 'audio' && speechSupported()) speak(item.lemma, lang.locale)
+  }, [item.id, mode, lang.locale])
 
   const locked = result !== null
 
@@ -57,7 +58,7 @@ export function DeckCard({ deck, item, mode, voice, onGraded }: {
         <span className="label">{MODE_LABEL[mode]}</span>
         {mode === 'choice' && (
           <p className="prompt-text">
-            {item.lemma} <SpeakButton text={item.lemma} voice={voice} />
+            {item.lemma} <SpeakButton text={item.lemma} voice={lang.locale} />
           </p>
         )}
         {mode === 'type' && <p className="prompt-text">{item.gloss.join(', ')}</p>}
@@ -86,12 +87,12 @@ export function DeckCard({ deck, item, mode, voice, onGraded }: {
         {mode === 'type' && (
           <input
             className="text-answer"
-            lang="es"
+            lang={lang.locale}
             autoFocus
             autoComplete="off"
             autoCapitalize="off"
             spellCheck={false}
-            placeholder="Escribe en español…"
+            placeholder={lang.typePrompt}
             value={text}
             disabled={locked}
             onChange={e => setText(e.target.value)}
@@ -105,7 +106,7 @@ export function DeckCard({ deck, item, mode, voice, onGraded }: {
           <div className="listen">
             {!audioBroken && (
               <div className="listen-controls">
-                <button type="button" className="speak big" title="Play" onClick={() => speak(item.lemma, voice)}>
+                <button type="button" className="speak big" title="Play" onClick={() => speak(item.lemma, lang.locale)}>
                   🔊 Play
                 </button>
               </div>
@@ -113,12 +114,12 @@ export function DeckCard({ deck, item, mode, voice, onGraded }: {
             {audioBroken && <span className="muted">Audio isn’t available in this browser — type the word shown above.</span>}
             <input
               className="text-answer"
-              lang="es"
+              lang={lang.locale}
               autoFocus
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              placeholder="Escribe en español…"
+              placeholder={lang.typePrompt}
               value={text}
               disabled={locked}
               onChange={e => setText(e.target.value)}
@@ -139,10 +140,10 @@ export function DeckCard({ deck, item, mode, voice, onGraded }: {
       {result && (
         <div className={`feedback ${result.correct ? 'correct' : 'wrong'}`}>
           <div className="feedback-body">
-            <strong>{result.correct ? '✓ ¡Correcto!' : '✗ Not quite'}</strong>
+            <strong>{result.correct ? `✓ ${lang.correct}` : '✗ Not quite'}</strong>
             {result.note && <p className="note">{result.note}</p>}
             <p className="reveal">
-              <strong>{item.lemma}</strong> <SpeakButton text={item.lemma} voice={voice} /> — {item.gloss.join(', ')}
+              <strong>{item.lemma}</strong> <SpeakButton text={item.lemma} voice={lang.locale} /> — {item.gloss.join(', ')}
             </p>
             {item.ex && (
               <p className="reveal">

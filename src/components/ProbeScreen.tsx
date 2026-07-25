@@ -7,6 +7,7 @@ import { useRef, useState } from 'react'
 import type { Deck } from '../lib/deck'
 import { checkText } from '../lib/check'
 import { useEngine } from '../lib/engine'
+import type { LangInfo } from '../lib/lang'
 import {
   estimateVocab,
   probeFrontier,
@@ -26,10 +27,9 @@ function probeConfig(n: number): { bands: number; perBand: number } {
   return { bands: 15, perBand: 10 }
 }
 
-export function ProbeScreen({ deck, lang, voice, onDone }: {
+export function ProbeScreen({ deck, lang, onDone }: {
   deck: Deck
-  lang: string
-  voice: string
+  lang: LangInfo
   onDone: () => void
 }) {
   const [state, setState] = useState<ProbeState>(() => startProbe(deck.items.length, probeConfig(deck.items.length)))
@@ -42,7 +42,7 @@ export function ProbeScreen({ deck, lang, voice, onDone }: {
     setFinalizing(true)
     const frontier = probeFrontier(finalState)
     const seeds = seedDeck(deck, frontier, todayString())
-    await useEngine.getState().applyProbe(lang, seeds, frontier)
+    await useEngine.getState().applyProbe(lang.code, seeds, frontier)
     setResult({ frontier, seededCount: Object.keys(seeds).length })
   }
 
@@ -108,7 +108,7 @@ export function ProbeScreen({ deck, lang, voice, onDone }: {
           <div className="prompt">
             <span className="label">What does this mean?</span>
             <p className="prompt-text">
-              {item.lemma} <SpeakButton text={item.lemma} voice={voice} />
+              {item.lemma} <SpeakButton text={item.lemma} voice={lang.locale} />
             </p>
           </div>
           <div className="answer-area">

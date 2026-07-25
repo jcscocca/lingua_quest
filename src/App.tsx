@@ -8,7 +8,8 @@ import { ProbeScreen } from './components/ProbeScreen'
 import { SessionScreen } from './components/SessionScreen'
 import type { Deck } from './lib/deck'
 import { loadDeck } from './lib/deck'
-import { LANGS, useEngine } from './lib/engine'
+import { useEngine } from './lib/engine'
+import { LANGS, langInfo } from './lib/lang'
 
 type View = 'home' | 'probe' | 'session' | 'collection'
 
@@ -44,24 +45,23 @@ export default function App() {
         <button onClick={() => location.reload()}>Retry</button>
       </div>
     )
-  if (!deck || !hydrated) return <div className="loading">Loading… ¡Un momento!</div>
 
-  const voice = lang === 'es' ? 'es-ES' : 'fr-FR'
+  const info = langInfo(lang)
+  if (!deck || !hydrated) return <div className="loading">{info.loading}</div>
 
   switch (view) {
     case 'probe':
-      return <ProbeScreen deck={deck} lang={lang} voice={voice} onDone={() => setView('home')} />
+      return <ProbeScreen deck={deck} lang={info} onDone={() => setView('home')} />
     case 'session':
-      return <SessionScreen deck={deck} voice={voice} onDone={() => setView('home')} />
+      return <SessionScreen deck={deck} lang={info} onDone={() => setView('home')} />
     case 'collection':
-      return <Collection deck={deck} voice={voice} onBack={() => setView('home')} />
+      return <Collection deck={deck} lang={info} onBack={() => setView('home')} />
     default:
       return (
         <Home
           deck={deck}
-          lang={lang}
+          lang={info}
           langs={LANGS}
-          voice={voice}
           onStartSession={() => setView('session')}
           onStartProbe={() => setView('probe')}
           onOpenCollection={() => setView('collection')}

@@ -18,6 +18,16 @@ export interface SessionOpts {
   sessionSize?: number
 }
 
+function isDue(states: Record<string, ItemState>, id: string, today: string): boolean {
+  return !!states[id] && states[id].due <= today
+}
+
+/** The real review backlog: every seen word due today or overdue. Independent of
+ *  session size and of the new words a session pads itself out with. */
+export function countDue(deck: Deck, states: Record<string, ItemState>, today: string): number {
+  return deck.items.filter(it => isDue(states, it.id, today)).length
+}
+
 export function assembleSession(
   deck: Deck,
   states: Record<string, ItemState>,
@@ -29,7 +39,7 @@ export function assembleSession(
   const sessionSize = opts.sessionSize ?? 20
 
   const reviews: SessionCard[] = deck.items
-    .filter(it => states[it.id] && states[it.id].due <= today)
+    .filter(it => isDue(states, it.id, today))
     .map(it => ({ it, s: states[it.id], ratio: dayDiff(states[it.id].due, today) / Math.max(1, states[it.id].interval) }))
     .sort((a, b) => b.ratio - a.ratio)
     .map(({ it, s }) => ({ item: it, state: s, mode: testModeForLevel(s.level) }))

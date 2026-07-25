@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { assembleSession } from './queue'
+import { assembleSession, countDue } from './queue'
 import { makeDeck } from './fixtures'
 import { EARNED_INTERVAL, type ItemState } from './srs'
 
@@ -63,5 +63,31 @@ describe('assembleSession', () => {
     }
     const cards = assembleSession(deck, states, today, { maxNew: 0, sessionSize: 10 }, () => 0)
     expect(cards[0].item.id).toBe('es:w2:noun')
+  })
+})
+
+describe('countDue', () => {
+  const deck = makeDeck(20)
+
+  it('is zero for a fresh profile, however many new words a session would offer', () => {
+    expect(countDue(deck, {}, today)).toBe(0)
+    expect(assembleSession(deck, {}, today, {}, () => 0).length).toBeGreaterThan(0)
+  })
+
+  it('counts seen words due today or overdue, and nothing else', () => {
+    const states: Record<string, ItemState> = {
+      'es:w1:noun': state({ due: '2026-07-20' }), // overdue
+      'es:w2:noun': state({ due: today }),        // due today
+      'es:w3:noun': state({ due: '2026-07-30' }), // not due
+    }
+    expect(countDue(deck, states, today)).toBe(2)
+  })
+
+  it('reports the whole backlog, not just what fits in one session', () => {
+    const big = makeDeck(50)
+    const states: Record<string, ItemState> = {}
+    for (let i = 1; i <= 40; i++) states[`es:w${i}:noun`] = state({ due: '2026-07-20' })
+    expect(countDue(big, states, today)).toBe(40)
+    expect(assembleSession(big, states, today, {}, () => 0)).toHaveLength(20)
   })
 })

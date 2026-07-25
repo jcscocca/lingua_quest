@@ -18,15 +18,19 @@ export function normalize(s: string): string {
     .trim()
 }
 
-/** Fold vowel accents (á→a, ü→u) but keep ñ, which is a distinct letter. */
+/** Fold diacritics (á→a, ô→o, ç→c) and ligatures (œ→oe) across the Latin
+ *  alphabet, but keep ñ, which is a distinct letter rather than an accented n.
+ *  Every run of non-ñ text is decomposed and stripped of its combining marks. */
 export function foldAccents(s: string): string {
-  return s
-    .replace(/á/g, 'a')
-    .replace(/é/g, 'e')
-    .replace(/í/g, 'i')
-    .replace(/ó/g, 'o')
-    .replace(/ú/g, 'u')
-    .replace(/ü/g, 'u')
+  return s.normalize('NFC').replace(/[^ñÑ]+/g, run =>
+    run
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/œ/g, 'oe')
+      .replace(/Œ/g, 'OE')
+      .replace(/æ/g, 'ae')
+      .replace(/Æ/g, 'AE'),
+  )
 }
 
 /** Match typed text against a set of acceptable answers, leniently. */
@@ -36,6 +40,6 @@ export function checkText(given: string, accept: string[]): CheckResult {
   if (accept.some(a => normalize(a) === g)) return { correct: true }
   const gf = foldAccents(g)
   const near = accept.find(a => foldAccents(normalize(a)) === gf)
-  if (near) return { correct: true, note: `¡Casi! Watch the accents — it's “${near}”.` }
+  if (near) return { correct: true, note: `Almost! Watch the accents — it's “${near}”.` }
   return { correct: false }
 }

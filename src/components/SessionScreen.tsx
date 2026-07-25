@@ -5,11 +5,12 @@
 import { useMemo, useState } from 'react'
 import type { Deck } from '../lib/deck'
 import { useEngine } from '../lib/engine'
+import type { LangInfo } from '../lib/lang'
 import { assembleSession } from '../lib/queue'
 import { todayString } from '../lib/xp'
 import { DeckCard } from './DeckCard'
 
-export function SessionScreen({ deck, voice, onDone }: { deck: Deck; voice: string; onDone: () => void }) {
+export function SessionScreen({ deck, lang, onDone }: { deck: Deck; lang: LangInfo; onDone: () => void }) {
   const states = useEngine(s => s.states)
   // Snapshot the queue once at mount — grading mid-session must not reshuffle
   // or resize the session already in progress.
@@ -58,7 +59,7 @@ export function SessionScreen({ deck, voice, onDone }: { deck: Deck; voice: stri
         <div className="progress-fill" style={{ width: `${(i / queue.length) * 100}%` }} />
       </div>
       <div className="runner-body">
-        <DeckCard key={card.item.id} deck={deck} item={card.item} mode={card.mode} voice={voice} onGraded={handleGraded} />
+        <DeckCard key={card.item.id} deck={deck} item={card.item} mode={card.mode} lang={lang} onGraded={handleGraded} />
       </div>
     </div>
   )

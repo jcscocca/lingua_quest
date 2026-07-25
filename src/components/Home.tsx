@@ -1,24 +1,14 @@
 import { useMemo, useRef } from 'react'
 import type { Deck } from '../lib/deck'
-import { LANGS, estimatedVocab, exportAll, importAll, strongCount, useEngine } from '../lib/engine'
-import { assembleSession } from '../lib/queue'
+import { estimatedVocab, exportAll, importAll, strongCount, useEngine } from '../lib/engine'
+import { type LANGS, type LangInfo, langLabel } from '../lib/lang'
+import { countDue } from '../lib/queue'
 import { todayString } from '../lib/xp'
 
-const LANG_INFO: Record<string, { name: string; flag: string }> = {
-  es: { name: 'Spanish', flag: '🇪🇸' },
-  fr: { name: 'French', flag: '🇫🇷' },
-}
-
-function langLabel(code: string): string {
-  const info = LANG_INFO[code]
-  return info ? `${info.flag} ${info.name}` : code.toUpperCase()
-}
-
-export function Home({ deck, lang, langs, voice, onStartSession, onStartProbe, onOpenCollection, onSwitchLang }: {
+export function Home({ deck, lang, langs, onStartSession, onStartProbe, onOpenCollection, onSwitchLang }: {
   deck: Deck
-  lang: string
+  lang: LangInfo
   langs: typeof LANGS
-  voice: string
   onStartSession: () => void
   onStartProbe: () => void
   onOpenCollection: () => void
@@ -29,10 +19,10 @@ export function Home({ deck, lang, langs, voice, onStartSession, onStartProbe, o
   const fileRef = useRef<HTMLInputElement>(null)
   const today = todayString()
 
-  const vocab = estimatedVocab(profile, lang)
+  const vocab = estimatedVocab(profile, lang.code)
   const strong = strongCount(states, today)
-  const dueCount = useMemo(() => assembleSession(deck, states, today, {}).length, [deck, states, today])
-  const probed = profile.frontier[lang] !== undefined
+  const dueCount = useMemo(() => countDue(deck, states, today), [deck, states, today])
+  const probed = profile.frontier[lang.code] !== undefined
 
   async function handleExport() {
     const data = await exportAll()
@@ -54,7 +44,7 @@ export function Home({ deck, lang, langs, voice, onStartSession, onStartProbe, o
       alert(String(e))
       return
     }
-    await useEngine.getState().hydrate(lang)
+    await useEngine.getState().hydrate(lang.code)
   }
 
   return (
@@ -64,10 +54,10 @@ export function Home({ deck, lang, langs, voice, onStartSession, onStartProbe, o
       </header>
 
       <div className="course-bar">
-        <span className="course-current">{langLabel(lang)}</span>
+        <span className="course-current">{langLabel(lang.code)}</span>
         <label className="course-switch">
           Language:{' '}
-          <select value={lang} onChange={e => onSwitchLang(e.target.value)}>
+          <select value={lang.code} onChange={e => onSwitchLang(e.target.value)}>
             {langs.map(l => (
               <option key={l} value={l}>{langLabel(l)}</option>
             ))}
@@ -84,7 +74,7 @@ export function Home({ deck, lang, langs, voice, onStartSession, onStartProbe, o
       {!probed && (
         <div className="review-callout">
           <strong>🧭 Estimate what you already know</strong>
-          <span>Take a quick probe to seed your {langLabel(lang)} vocabulary instantly.</span>
+          <span>Take a quick probe to seed your {langLabel(lang.code)} vocabulary instantly.</span>
           <button onClick={onStartProbe}>Run the probe</button>
         </div>
       )}

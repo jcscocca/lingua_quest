@@ -83,7 +83,8 @@ describe('metrics', () => {
   })
 })
 
-import { exportAll, importAll, LANGS } from './engine'
+import { exportAll, importAll } from './engine'
+import { LANGS } from './lang'
 
 describe('export / import', () => {
   it('round-trips profile and every language store', async () => {

@@ -1,0 +1,453 @@
+{
+ "generated": "2026-07-26",
+ "pairs": [
+  {
+   "form": "acceder",
+   "es": {
+    "id": "es:acceder:verb",
+    "lemma": "acceder",
+    "pos": "verb",
+    "gloss": [
+     "to accede, to agree, to concur",
+     "to access"
+    ]
+   },
+   "fr": {
+    "id": "fr:accéder:verb",
+    "lemma": "accéder",
+    "pos": "verb",
+    "gloss": [
+     "to reach",
+     "to obtain"
+    ]
+   }
+  },
+  {
+   "form": "cesar",
+   "es": {
+    "id": "es:cesar:verb",
+    "lemma": "cesar",
+    "pos": "verb",
+    "gloss": [
+     "to cease",
+     "to quit, to step down"
+    ]
+   },
+   "fr": {
+    "id": "fr:césar:noun",
+    "lemma": "césar",
+    "pos": "noun",
+    "gloss": [
+     "Caesar"
+    ]
+   }
+  },
+  {
+   "form": "coma",
+   "es": {
+    "id": "es:coma:noun",
+    "lemma": "coma",
+    "pos": "noun",
+    "gloss": [
+     "comma",
+     "misericord"
+    ]
+   },
+   "fr": {
+    "id": "fr:coma:noun",
+    "lemma": "coma",
+    "pos": "noun",
+    "gloss": [
+     "coma"
+    ]
+   }
+  },
+  {
+   "form": "con",
+   "es": {
+    "id": "es:con:prep",
+    "lemma": "con",
+    "pos": "prep",
+    "gloss": [
+     "with"
+    ]
+   },
+   "fr": {
+    "id": "fr:con:noun",
+    "lemma": "con",
+    "pos": "noun",
+    "gloss": [
+     "cunt",
+     "pussy"
+    ]
+   }
+  },
+  {
+   "form": "creer",
+   "es": {
+    "id": "es:creer:verb",
+    "lemma": "creer",
+    "pos": "verb",
+    "gloss": [
+     "to believe",
+     "to think"
+    ]
+   },
+   "fr": {
+    "id": "fr:créer:verb",
+    "lemma": "créer",
+    "pos": "verb",
+    "gloss": [
+     "to create"
+    ]
+   }
+  },
+  {
+   "form": "de",
+   "es": {
+    "id": "es:de:prep",
+    "lemma": "de",
+    "pos": "prep",
+    "gloss": [
+     "of",
+     "from"
+    ]
+   },
+   "fr": {
+    "id": "fr:dé:noun",
+    "lemma": "dé",
+    "pos": "noun",
+    "gloss": [
+     "die",
+     "diced slice"
+    ]
+   }
+  },
+  {
+   "form": "dos",
+   "es": {
+    "id": "es:dos:num",
+    "lemma": "dos",
+    "pos": "num",
+    "gloss": [
+     "two"
+    ]
+   },
+   "fr": {
+    "id": "fr:dos:noun",
+    "lemma": "dos",
+    "pos": "noun",
+    "gloss": [
+     "back",
+     "backs"
+    ]
+   }
+  },
+  {
+   "form": "fin",
+   "es": {
+    "id": "es:fin:noun",
+    "lemma": "fin",
+    "pos": "noun",
+    "gloss": [
+     "end",
+     "purpose, goal"
+    ]
+   },
+   "fr": {
+    "id": "fr:fin:adj",
+    "lemma": "fin",
+    "pos": "adj",
+    "gloss": [
+     "thin",
+     "fine"
+    ]
+   }
+  },
+  {
+   "form": "hotel",
+   "es": {
+    "id": "es:hotel:noun",
+    "lemma": "hotel",
+    "pos": "noun",
+    "gloss": [
+     "hotel"
+    ]
+   },
+   "fr": {
+    "id": "fr:hôtel:noun",
+    "lemma": "hôtel",
+    "pos": "noun",
+    "gloss": [
+     "mansion",
+     "town house"
+    ]
+   }
+  },
+  {
+   "form": "papi",
+   "es": {
+    "id": "es:papi:noun",
+    "lemma": "papi",
+    "pos": "noun",
+    "gloss": [
+     "daddy",
+     "daddy, baby"
+    ]
+   },
+   "fr": {
+    "id": "fr:papi:noun",
+    "lemma": "papi",
+    "pos": "noun",
+    "gloss": [
+     "grandad",
+     "grandpa"
+    ]
+   }
+  },
+  {
+   "form": "par",
+   "es": {
+    "id": "es:par:noun",
+    "lemma": "par",
+    "pos": "noun",
+    "gloss": [
+     "pair",
+     "couple"
+    ]
+   },
+   "fr": {
+    "id": "fr:par:prep",
+    "lemma": "par",
+    "pos": "prep",
+    "gloss": [
+     "by",
+     "through, per"
+    ]
+   }
+  },
+  {
+   "form": "placer",
+   "es": {
+    "id": "es:placer:noun",
+    "lemma": "placer",
+    "pos": "noun",
+    "gloss": [
+     "pleasure",
+     "something done to please"
+    ]
+   },
+   "fr": {
+    "id": "fr:placer:verb",
+    "lemma": "placer",
+    "pos": "verb",
+    "gloss": [
+     "to place",
+     "to seat"
+    ]
+   }
+  },
+  {
+   "form": "principe",
+   "es": {
+    "id": "es:príncipe:noun",
+    "lemma": "príncipe",
+    "pos": "noun",
+    "gloss": [
+     "prince",
+     "sovereign, ruler"
+    ]
+   },
+   "fr": {
+    "id": "fr:principe:noun",
+    "lemma": "principe",
+    "pos": "noun",
+    "gloss": [
+     "principle",
+     "beginning"
+    ]
+   }
+  },
+  {
+   "form": "repartir",
+   "es": {
+    "id": "es:repartir:verb",
+    "lemma": "repartir",
+    "pos": "verb",
+    "gloss": [
+     "to share, give out",
+     "to deliver"
+    ]
+   },
+   "fr": {
+    "id": "fr:repartir:verb",
+    "lemma": "repartir",
+    "pos": "verb",
+    "gloss": [
+     "to leave again",
+     "to go back"
+    ]
+   }
+  },
+  {
+   "form": "resto",
+   "es": {
+    "id": "es:resto:noun",
+    "lemma": "resto",
+    "pos": "noun",
+    "gloss": [
+     "rest, remainder"
+    ]
+   },
+   "fr": {
+    "id": "fr:resto:noun",
+    "lemma": "resto",
+    "pos": "noun",
+    "gloss": [
+     "resto",
+     "restaurant"
+    ]
+   }
+  },
+  {
+   "form": "subir",
+   "es": {
+    "id": "es:subir:verb",
+    "lemma": "subir",
+    "pos": "verb",
+    "gloss": [
+     "to go up or come up",
+     "to raise"
+    ]
+   },
+   "fr": {
+    "id": "fr:subir:verb",
+    "lemma": "subir",
+    "pos": "verb",
+    "gloss": [
+     "to suffer",
+     "to undergo"
+    ]
+   }
+  },
+  {
+   "form": "sur",
+   "es": {
+    "id": "es:sur:noun",
+    "lemma": "sur",
+    "pos": "noun",
+    "gloss": [
+     "south"
+    ]
+   },
+   "fr": {
+    "id": "fr:sur:prep",
+    "lemma": "sur",
+    "pos": "prep",
+    "gloss": [
+     "on",
+     "about"
+    ]
+   }
+  },
+  {
+   "form": "sur",
+   "es": {
+    "id": "es:sur:noun",
+    "lemma": "sur",
+    "pos": "noun",
+    "gloss": [
+     "south"
+    ]
+   },
+   "fr": {
+    "id": "fr:sûr:adj",
+    "lemma": "sûr",
+    "pos": "adj",
+    "gloss": [
+     "sure",
+     "certain"
+    ]
+   }
+  },
+  {
+   "form": "te",
+   "es": {
+    "id": "es:té:noun",
+    "lemma": "té",
+    "pos": "noun",
+    "gloss": [
+     "tea"
+    ]
+   },
+   "fr": {
+    "id": "fr:te:pron",
+    "lemma": "te",
+    "pos": "pron",
+    "gloss": [
+     "you",
+     "yourself"
+    ]
+   }
+  },
+  {
+   "form": "tres",
+   "es": {
+    "id": "es:tres:num",
+    "lemma": "tres",
+    "pos": "num",
+    "gloss": [
+     "three"
+    ]
+   },
+   "fr": {
+    "id": "fr:très:adv",
+    "lemma": "très",
+    "pos": "adv",
+    "gloss": [
+     "very"
+    ]
+   }
+  },
+  {
+   "form": "ver",
+   "es": {
+    "id": "es:ver:verb",
+    "lemma": "ver",
+    "pos": "verb",
+    "gloss": [
+     "to see",
+     "to watch"
+    ]
+   },
+   "fr": {
+    "id": "fr:ver:noun",
+    "lemma": "ver",
+    "pos": "noun",
+    "gloss": [
+     "worm"
+    ]
+   }
+  },
+  {
+   "form": "y",
+   "es": {
+    "id": "es:y:conj",
+    "lemma": "y",
+    "pos": "conj",
+    "gloss": [
+     "and"
+    ]
+   },
+   "fr": {
+    "id": "fr:y:pron",
+    "lemma": "y",
+    "pos": "pron",
+    "gloss": [
+     "there",
+     "to it, of it"
+    ]
+   }
+  }
+ ]
+}

@@ -23,7 +23,8 @@ export interface ConfusablesFile {
   pairs: ConfusablePair[]
 }
 
-const STOP = new Set(['to', 'a', 'an', 'the', 'of', 's', 'or', 'in', 'on'])
+// Note: 'in'/'on' are NOT stopwords — for prepositions the gloss IS the word.
+const STOP = new Set(['to', 'a', 'an', 'the', 'of', 's', 'or'])
 
 function glossTokens(glosses: string[]): Set<string> {
   const out = new Set<string>()

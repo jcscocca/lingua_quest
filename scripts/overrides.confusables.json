@@ -1,0 +1,16 @@
+{
+  "drop": [
+    "es:genial:adj|fr:génial:adj",
+    "es:metro:noun|fr:métro:noun",
+    "es:miserable:adj|fr:misérable:adj",
+    "es:monte:noun|fr:monté:adj",
+    "es:moto:noun|fr:moto:noun",
+    "es:patrón:noun|fr:patron:noun",
+    "es:plan:noun|fr:plan:noun",
+    "es:reunir:verb|fr:réunir:verb",
+    "es:San:adj|fr:san:noun",
+    "es:tele:noun|fr:télé:noun",
+    "es:triste:adj|fr:triste:adj"
+  ],
+  "add": []
+}

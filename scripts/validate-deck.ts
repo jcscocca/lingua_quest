@@ -47,8 +47,29 @@ export function validateDecks(): Issue[] {
   return issues
 }
 
+/** Confusables gate: every pair id must resolve in the current decks, so a
+ *  deck regeneration that renames or drops a lemma fails here, not in the UI. */
+export function validateConfusables(): Issue[] {
+  const path = `${CONTENT}confusables.json`
+  if (!existsSync(path)) return []
+  let file: { pairs?: { es?: { id?: string }; fr?: { id?: string } }[] }
+  try { file = JSON.parse(readFileSync(path, 'utf8')) } catch (e) { return [{ where: 'confusables.json', msg: `unreadable: ${String(e)}` }] }
+  const ids = (lang: string) => {
+    const deck = JSON.parse(readFileSync(`${CONTENT}${lang}/deck.json`, 'utf8')) as Deck
+    return new Set(deck.items.map(it => it.id))
+  }
+  const esIds = ids('es')
+  const frIds = ids('fr')
+  const issues: Issue[] = []
+  for (const [i, p] of (file.pairs ?? []).entries()) {
+    if (!p.es?.id || !esIds.has(p.es.id)) issues.push({ where: `confusables#${i}`, msg: `es id ${p.es?.id} not in es deck` })
+    if (!p.fr?.id || !frIds.has(p.fr.id)) issues.push({ where: `confusables#${i}`, msg: `fr id ${p.fr?.id} not in fr deck` })
+  }
+  return issues
+}
+
 if (!process.env.VITEST) {
-  const issues = validateDecks()
-  if (issues.length === 0) console.log('✓ decks valid — structure, dense ranks, self-consistent glosses, attribution.')
+  const issues = [...validateDecks(), ...validateConfusables()]
+  if (issues.length === 0) console.log('✓ decks valid — structure, dense ranks, self-consistent glosses, attribution, confusables resolve.')
   else { console.error(`✗ ${issues.length} deck issue(s):`); for (const i of issues) console.error(`  [${i.where}] ${i.msg}`); process.exit(1) }
 }

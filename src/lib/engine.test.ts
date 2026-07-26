@@ -123,3 +123,47 @@ describe('export / import', () => {
     expect(LANGS).toContain('fr')
   })
 })
+
+import { get as idbGet, set as idbSet } from 'idb-keyval'
+import { addDays } from './date'
+import type { Profile } from './engine'
+
+describe('focus mode', () => {
+  it('resume shifts dues by the paused span, persists them, and clears the stamp', async () => {
+    await useEngine.getState().hydrate('es')
+    await useEngine.getState().grade('es:hola:interj', true)
+    const before = useEngine.getState().states['es:hola:interj'].due
+
+    // Backdate the pause 5 days so resume has a real span to shift.
+    const past = addDays(todayString(), -5)
+    await idbSet('lingua-quest-profile', { version: 2, frontier: {}, paused: { es: past }, hydrated: false })
+    await useEngine.getState().hydrate('es')
+    expect(useEngine.getState().profile.paused?.es).toBe(past)
+
+    await useEngine.getState().resumeLang()
+    const after = useEngine.getState().states['es:hola:interj']
+    expect(after.due).toBe(addDays(before, 5))
+    expect(useEngine.getState().profile.paused?.es).toBeUndefined()
+    const persisted = Object.fromEntries(await entries<string, ItemState>(itemStore('es')))
+    expect(persisted['es:hola:interj'].due).toBe(after.due)
+  })
+
+  it('pauseLang persists the stamp; resume with no stamp is a no-op', async () => {
+    await useEngine.getState().hydrate('es')
+    await useEngine.getState().resumeLang() // nothing paused — must not throw or shift
+    await useEngine.getState().pauseLang()
+    expect(useEngine.getState().profile.paused?.es).toBe(todayString())
+    const saved = await idbGet<Profile>('lingua-quest-profile')
+    expect(saved?.paused?.es).toBe(todayString())
+  })
+
+  it('export carries paused through import', async () => {
+    await useEngine.getState().hydrate('es')
+    await useEngine.getState().pauseLang()
+    const file = await exportAll()
+    expect(file.profile.paused?.es).toBe(todayString())
+    await importAll(file)
+    const saved = await idbGet<Profile>('lingua-quest-profile')
+    expect(saved?.paused?.es).toBe(todayString())
+  })
+})

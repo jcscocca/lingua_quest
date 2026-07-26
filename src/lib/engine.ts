@@ -5,7 +5,8 @@
 
 import { create } from 'zustand'
 import { clear, createStore, entries, get as idbGet, set as idbSet, setMany, type UseStore } from 'idb-keyval'
-import { todayString } from './date'
+import { dayDiff, todayString } from './date'
+import { shiftStates } from './focus'
 import { LANGS } from './lang'
 import { isStrong, newState, schedule, type ItemState } from './srs'
 
@@ -27,6 +28,8 @@ interface EngineStore {
   grade(id: string, correct: boolean): Promise<void>
   applyProbe(lang: string, seeds: Record<string, ItemState>, frontier: number): Promise<void>
   resetItem(id: string): Promise<void>
+  pauseLang(): Promise<void>
+  resumeLang(): Promise<void>
 }
 
 const PROFILE_KEY = 'lingua-quest-profile'
@@ -68,6 +71,30 @@ export const useEngine = create<EngineStore>((set, get) => ({
     const profile: Profile = { ...base, hydrated: true, frontier: { ...base.frontier, [lang]: frontier } }
     await idbSet(PROFILE_KEY, profile)
     set(s => ({ profile, states: s.activeLang === lang ? { ...s.states, ...seeds } : s.states }))
+  },
+
+  async pauseLang() {
+    const { activeLang } = get()
+    const saved = await idbGet<Profile>(PROFILE_KEY).catch(() => undefined)
+    const base = saved && saved.version === 2 ? saved : get().profile
+    const profile: Profile = { ...base, hydrated: true, paused: { ...base.paused, [activeLang]: todayString() } }
+    await idbSet(PROFILE_KEY, profile)
+    set({ profile })
+  },
+
+  async resumeLang() {
+    const { activeLang, states, profile } = get()
+    const since = profile.paused?.[activeLang]
+    if (!since) return
+    const shifted = shiftStates(states, dayDiff(since, todayString()))
+    if (shifted !== states) await setMany(Object.entries(shifted), itemStore(activeLang))
+    const saved = await idbGet<Profile>(PROFILE_KEY).catch(() => undefined)
+    const base = saved && saved.version === 2 ? saved : profile
+    const paused = { ...base.paused }
+    delete paused[activeLang]
+    const next: Profile = { ...base, hydrated: true, paused }
+    await idbSet(PROFILE_KEY, next)
+    set({ profile: next, states: shifted })
   },
 
   async resetItem(id) {

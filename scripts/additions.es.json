@@ -1,0 +1,16 @@
+[
+  { "lemma": "naranja", "pos": "adj", "gloss": ["orange"], "theme": "colors" },
+  { "lemma": "rosa", "pos": "adj", "gloss": ["pink"], "theme": "colors" },
+  { "lemma": "morado", "pos": "adj", "gloss": ["purple"], "theme": "colors" },
+  { "lemma": "marrón", "pos": "adj", "gloss": ["brown"], "theme": "colors" },
+  { "lemma": "violeta", "pos": "adj", "gloss": ["violet"], "theme": "colors" },
+  { "lemma": "celeste", "pos": "adj", "gloss": ["sky blue", "light blue"], "theme": "colors" },
+  { "lemma": "plateado", "pos": "adj", "gloss": ["silver", "silvery"], "theme": "colors" },
+  { "lemma": "león", "pos": "noun", "gloss": ["lion"], "theme": "animals" },
+  { "lemma": "elefante", "pos": "noun", "gloss": ["elephant"], "theme": "animals" },
+  { "lemma": "pato", "pos": "noun", "gloss": ["duck"], "theme": "animals" },
+  { "lemma": "oveja", "pos": "noun", "gloss": ["sheep"], "theme": "animals" },
+  { "lemma": "mosca", "pos": "noun", "gloss": ["fly"], "theme": "animals" },
+  { "lemma": "araña", "pos": "noun", "gloss": ["spider"], "theme": "animals" },
+  { "lemma": "tortuga", "pos": "noun", "gloss": ["turtle", "tortoise"], "theme": "animals" }
+]

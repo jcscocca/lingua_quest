@@ -1,0 +1,10 @@
+[
+  { "lemma": "orange", "pos": "adj", "gloss": ["orange"], "theme": "colors" },
+  { "lemma": "rose", "pos": "adj", "gloss": ["pink"], "theme": "colors" },
+  { "lemma": "marron", "pos": "adj", "gloss": ["brown"], "theme": "colors" },
+  { "lemma": "doré", "pos": "adj", "gloss": ["golden", "gilded"], "theme": "colors" },
+  { "lemma": "argenté", "pos": "adj", "gloss": ["silver", "silvery"], "theme": "colors" },
+  { "lemma": "beige", "pos": "adj", "gloss": ["beige"], "theme": "colors" },
+  { "lemma": "pourpre", "pos": "adj", "gloss": ["purple", "crimson"], "theme": "colors" },
+  { "lemma": "foncé", "pos": "adj", "gloss": ["dark", "deep-colored"], "theme": "colors" }
+]

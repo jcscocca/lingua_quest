@@ -13,6 +13,8 @@ export interface Profile {
   version: 2
   /** estimated frontier / vocab size per language */
   frontier: Record<string, number>
+  /** focus mode: lang → date its schedule froze (absent = running) */
+  paused?: Record<string, string>
   hydrated: boolean
 }
 

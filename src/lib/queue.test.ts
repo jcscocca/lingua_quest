@@ -66,6 +66,35 @@ describe('assembleSession', () => {
   })
 })
 
+describe('themed sessions', () => {
+  // w1..w5 food, w6..w10 animals, rest untagged
+  const deck = makeDeck(20)
+  deck.items.forEach((it, i) => {
+    if (i < 5) it.theme = 'food-drink'
+    else if (i < 10) it.theme = 'animals'
+  })
+
+  it('restricts reviews and new words to the theme', () => {
+    const states: Record<string, ItemState> = {
+      'es:w1:noun': state({ due: '2026-07-20' }),  // food, overdue
+      'es:w6:noun': state({ due: '2026-07-20' }),  // animal, overdue
+      'es:w11:noun': state({ due: '2026-07-20' }), // untagged, overdue
+    }
+    const cards = assembleSession(deck, states, today, { maxNew: 3, sessionSize: 10, theme: 'food-drink' }, () => 0)
+    const ids = cards.map(c => c.item.id)
+    expect(ids).toContain('es:w1:noun')
+    expect(ids).not.toContain('es:w6:noun')
+    expect(ids).not.toContain('es:w11:noun')
+    // fresh fill comes only from unseen food words, by rank
+    expect(ids.filter(id => !states[id])).toEqual(['es:w2:noun', 'es:w3:noun', 'es:w4:noun'])
+  })
+
+  it('without a theme behaves as before', () => {
+    const cards = assembleSession(deck, {}, today, { maxNew: 3, sessionSize: 10 }, () => 0)
+    expect(cards.map(c => c.item.id)).toEqual(['es:w1:noun', 'es:w2:noun', 'es:w3:noun'])
+  })
+})
+
 describe('countDue', () => {
   const deck = makeDeck(20)
 

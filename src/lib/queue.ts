@@ -16,6 +16,8 @@ export interface SessionCard {
 export interface SessionOpts {
   maxNew?: number
   sessionSize?: number
+  /** Restrict the whole session (reviews AND new words) to one theme. */
+  theme?: string
 }
 
 function isDue(states: Record<string, ItemState>, id: string, today: string): boolean {
@@ -37,8 +39,9 @@ export function assembleSession(
 ): SessionCard[] {
   const maxNew = opts.maxNew ?? 15
   const sessionSize = opts.sessionSize ?? 20
+  const pool = opts.theme ? deck.items.filter(it => it.theme === opts.theme) : deck.items
 
-  const reviews: SessionCard[] = deck.items
+  const reviews: SessionCard[] = pool
     .filter(it => isDue(states, it.id, today))
     .map(it => ({ it, s: states[it.id], ratio: dayDiff(states[it.id].due, today) / Math.max(1, states[it.id].interval) }))
     .sort((a, b) => b.ratio - a.ratio)
@@ -47,7 +50,7 @@ export function assembleSession(
   // Reviews take priority: new words only fill slots left over after due
   // reviews, so a backlog is never displaced by fresh cards.
   const room = Math.max(0, sessionSize - reviews.length)
-  const fresh: SessionCard[] = deck.items
+  const fresh: SessionCard[] = pool
     .filter(it => !states[it.id])
     .sort((a, b) => a.rank - b.rank)
     .slice(0, Math.min(maxNew, room))

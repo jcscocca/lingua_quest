@@ -3,7 +3,7 @@
 // New words are interleaved among reviews so a session is never a wall of
 // unfamiliar cards.
 
-import { dayDiff } from './xp'
+import { dayDiff } from './date'
 import type { Deck, DeckItem } from './deck'
 import { newState, testModeForLevel, type ItemState } from './srs'
 

@@ -7,7 +7,7 @@ import type { Deck } from '../lib/deck'
 import { useEngine } from '../lib/engine'
 import type { LangInfo } from '../lib/lang'
 import { assembleSession } from '../lib/queue'
-import { todayString } from '../lib/xp'
+import { todayString } from '../lib/date'
 import { DeckCard } from './DeckCard'
 
 export function SessionScreen({ deck, lang, onDone }: { deck: Deck; lang: LangInfo; onDone: () => void }) {

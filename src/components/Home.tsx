@@ -3,7 +3,7 @@ import type { Deck } from '../lib/deck'
 import { estimatedVocab, exportAll, importAll, strongCount, useEngine } from '../lib/engine'
 import { type LANGS, type LangInfo, langLabel } from '../lib/lang'
 import { countDue } from '../lib/queue'
-import { todayString } from '../lib/xp'
+import { todayString } from '../lib/date'
 
 export function Home({ deck, lang, langs, onStartSession, onStartProbe, onOpenCollection, onSwitchLang }: {
   deck: Deck

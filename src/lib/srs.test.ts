@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { EARNED_INTERVAL, LAPSE_DROP, MAX_LEVEL, newState, schedule, testModeForLevel, type ItemState } from './srs'
 import { FUZZY_SEED_MAX, FUZZY_SEED_MIN, KNOWN_SEED_MAX, KNOWN_SEED_MIN, isStrong, seedFromProbe } from './srs'
-import { addDays } from './xp'
+import { addDays } from './date'
 
 const at = (level: number, over: Partial<ItemState> = {}): ItemState => ({
   level, interval: EARNED_INTERVAL[level], due: '2026-07-24', lapses: 0, seen: '2026-07-24', origin: 'default', ...over,

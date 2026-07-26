@@ -17,7 +17,7 @@ import {
   startProbe,
   type ProbeState,
 } from '../lib/probe'
-import { todayString } from '../lib/xp'
+import { todayString } from '../lib/date'
 import { SpeakButton } from './SpeakButton'
 
 // A full 15×10 sweep only makes sense for a big deck. For small decks (like the

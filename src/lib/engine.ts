@@ -5,7 +5,7 @@
 
 import { create } from 'zustand'
 import { clear, createStore, entries, get as idbGet, set as idbSet, setMany, type UseStore } from 'idb-keyval'
-import { todayString } from './xp'
+import { todayString } from './date'
 import { LANGS } from './lang'
 import { isStrong, newState, schedule, type ItemState } from './srs'
 

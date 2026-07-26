@@ -3,7 +3,7 @@
 // A right answer matures the word one level; a wrong answer drops it LAPSE_DROP
 // levels back toward cheap recognition so it re-stabilizes fast.
 
-import { addDays } from './xp'
+import { addDays } from './date'
 import type { Grade } from './deck'
 
 export type TestMode = 'choice' | 'type' | 'audio'

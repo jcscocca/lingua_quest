@@ -1,31 +1,32 @@
 # 🗺️ Lingua Quest
 
-A single-player **language-learning** trainer: a Duolingo-style skill tree with
-one XP / streak / badge / spaced-review backbone, all in-browser with no
-accounts. **Starts with Spanish** 🇪🇸 and is built to add more languages as pure
-content.
+A single-player **vocabulary trainer** in the spirit of old Memrise: pure
+spaced repetition over real frequency-ranked word decks, all in-browser with
+no accounts. **Spanish** 🇪🇸 and **French** 🇫🇷, 3,000 words each.
 
-Inspired by the [SQL Quest](../README.md) coding trainer in this repo — it
-borrows the same learning backbone (skill tree, XP, streaks, spaced-repetition
-Daily Review, a collection to fill, IndexedDB persistence, free roam) and
-retargets it at real languages.
+No skill tree, no XP, no streaks — just an honest picture of what you know
+and a daily queue that keeps it that way.
 
-## What's inside
+## How it works
 
-- **A real Spanish course** — 5 units, 13 skills, ~120 exercises:
-  greetings, courtesy, people, numbers, colors, days, food, family, animals,
-  *ser* vs *estar*, *tener*, common verbs, and a boss review.
-- **Five exercise types**, each graded in-browser:
-  - **Choose** the correct translation or meaning
-  - **Type** the translation (accent-lenient — a missing accent is accepted with a nudge)
-  - **Listen** and type what you hear — spoken by the browser's **Web Speech API**
-    (no network, no accounts; the app's in-browser "engine")
-  - **Build** the sentence from a word bank
-  - **Match** Spanish words to their meanings
-- **A vocabulary collection** — every correct answer catches the words it teaches
-  into a searchable notebook you can hear read aloud.
-- **Daily Review** — completed skills resurface on an expanding schedule
-  (2 → 4 → 8 … days); getting rusty pulls mastery down until you practice.
+- **The probe** — a short placement test that samples words across frequency
+  bands, estimates how many words you already know, and seeds them into the
+  schedule as mature (so you review to *maintain* them, not relearn them).
+  Seed intervals are jittered so maintenance reviews arrive as a steady
+  trickle, never an avalanche.
+- **Sessions** — due reviews first (most overdue first), padded with new
+  words fed in by frequency rank. Each word climbs a 6-level ladder, and the
+  test escalates with maturity:
+  - **Choice** — recognize the English meaning (levels 0–2)
+  - **Type** — produce the word from its meaning, accent-lenient
+    (levels 3–4)
+  - **Audio** — type what you hear, spoken by the browser's Web Speech API
+    (level 5; degrades to a visible transcription task without TTS)
+- **The collection** — browse or search the whole deck with each word's
+  schedule state, and reset any word you want to relearn from scratch.
+- **Honest metrics** — estimated vocabulary, words at strong retention, and
+  today's real review backlog. A wrong answer drops a word back toward cheap
+  recognition so it re-stabilizes fast.
 
 ## Run it
 
@@ -34,35 +35,28 @@ retargets it at real languages.
 
 ## Develop
 
-    npm test           # unit tests (checking, XP, streaks, review, progress, content)
-    npm run validate   # content gate: replays every intended answer through the real checker
+    npm test           # unit tests (scheduler, probe, queue, grading, persistence)
+    npm run validate   # content gate: structure + every deck item passes the grader
     npm run build      # typecheck + production build
-    npm run e2e        # Playwright smoke test
+    npm run e2e        # Playwright smoke test against the built site
 
 ## Content
 
-All content is JSON under `public/content/` — adding a language or a lesson
-never touches app code.
+Decks are generated JSON under `public/content/<lang>/deck.json` — ~3,000
+lemmas with English glosses, ordered by a dense frequency `rank` the probe
+depends on. Item ids (`lang:lemma:pos`) are stable across regeneration, so
+your schedule survives a deck rebuild.
 
-- `public/content/courses.json` — the list of languages (id, name, flag, TTS voice)
-- `public/content/<lang>/curriculum.json` — units → skills (the tree + prerequisites)
-- `public/content/<lang>/skills/<skill>.json` — the exercise bank for a skill
+    npm run build:deck      # Spanish — FrequencyWords + Wiktionary via doozan/spanish_data
+    npm run build:deck:fr   # French  — kaikki.org wiktextract + FrequencyWords
 
-Every change must pass `npm run validate`, which checks structure **and** that
-each exercise's intended answer actually passes the grader.
-
-### Adding another language
-
-1. Add an entry to `courses.json` with a BCP-47 `voice` (e.g. `fr-FR`).
-2. Add `<lang>/curriculum.json` and a bank per skill under `<lang>/skills/`.
-3. `npm run validate`. That's it — the language picker appears automatically
-   once more than one course exists.
+Raw sources download into a gitignored `raw/`. Gloss corrections live in
+`scripts/overrides.<lang>.json` — edit the override, rebuild the deck, and
+`npm run validate` gates the result (CI runs it on every push).
 
 ## Progress
 
-Stored in IndexedDB — no accounts. **Export / Import** buttons on the home
-screen back up progress as JSON.
-
-**Free roam** — a header toggle that opens every skill regardless of
-prerequisites, for practice out of order. Anything you solve still earns XP,
-completes the node, and enters Daily Review exactly as it would in sequence.
+Stored per-language in IndexedDB — no accounts. **Export / Import** on the
+home screen backs up everything as JSON. The deployed site lives at
+[jcscocca.github.io/lingua_quest](https://jcscocca.github.io/lingua_quest/),
+built and smoke-tested by CI on every push to `main`.

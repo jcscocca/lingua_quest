@@ -6,6 +6,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import type { Deck } from '../src/lib/deck'
 import { checkText } from '../src/lib/check'
+import { isTheme } from '../src/lib/themes'
 
 const CONTENT = fileURLToPath(new URL('../public/content/', import.meta.url))
 
@@ -42,6 +43,7 @@ export function validateDecks(): Issue[] {
       // self-consistency: the canonical gloss must pass the grader against itself
       if (it.gloss?.[0] && !checkText(it.gloss[0], it.gloss).correct) add(w, `gloss "${it.gloss[0]}" fails the checker`)
       if (it.ex && !it.ex.t.toLowerCase().includes(it.lemma.toLowerCase())) add(w, `example does not contain the lemma`)
+      if (it.theme != null && !isTheme(it.theme)) add(w, `unknown theme "${it.theme}"`)
     })
   }
   return issues

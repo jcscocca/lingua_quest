@@ -11,17 +11,18 @@ import { assembleSession } from '../lib/queue'
 import { todayString } from '../lib/date'
 import { DeckCard } from './DeckCard'
 
-export function SessionScreen({ deck, lang, confusables, onDone }: {
+export function SessionScreen({ deck, lang, confusables, theme, onDone }: {
   deck: Deck
   lang: LangInfo
   confusables?: Map<string, ConfusablePair> | null
+  theme?: string | null
   onDone: () => void
 }) {
   const states = useEngine(s => s.states)
   // Snapshot the queue once at mount — grading mid-session must not reshuffle
   // or resize the session already in progress.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const queue = useMemo(() => assembleSession(deck, states, todayString(), {}), [deck])
+  const queue = useMemo(() => assembleSession(deck, states, todayString(), theme ? { theme } : {}), [deck])
   const [i, setI] = useState(0)
   const [correct, setCorrect] = useState(0)
 

@@ -21,6 +21,7 @@ export default function App() {
   const [deck, setDeck] = useState<Deck | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<View>('home')
+  const [sessionTheme, setSessionTheme] = useState<string | null>(null)
   const [confusables, setConfusables] = useState<Map<string, ConfusablePair> | null>(null)
   const hydrated = useEngine(s => s.hydrated)
 
@@ -57,7 +58,7 @@ export default function App() {
     case 'probe':
       return <ProbeScreen deck={deck} lang={info} onDone={() => setView('home')} />
     case 'session':
-      return <SessionScreen deck={deck} lang={info} confusables={confusables} onDone={() => setView('home')} />
+      return <SessionScreen deck={deck} lang={info} confusables={confusables} theme={sessionTheme} onDone={() => setView('home')} />
     case 'collection':
       return <Collection deck={deck} lang={info} confusables={confusables} onBack={() => setView('home')} />
     default:
@@ -66,7 +67,10 @@ export default function App() {
           deck={deck}
           lang={info}
           langs={LANGS}
-          onStartSession={() => setView('session')}
+          onStartSession={theme => {
+            setSessionTheme(theme)
+            setView('session')
+          }}
           onStartProbe={() => setView('probe')}
           onOpenCollection={() => setView('collection')}
           onSwitchLang={switchLang}

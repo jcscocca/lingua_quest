@@ -1,16 +1,17 @@
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import type { Deck } from '../lib/deck'
 import { estimatedVocab, exportAll, importAll, strongCount, useEngine } from '../lib/engine'
 import { effectiveToday, pausedSince } from '../lib/focus'
 import { type LANGS, type LangInfo, langLabel } from '../lib/lang'
 import { countDue } from '../lib/queue'
+import { THEME_LABEL, THEMES } from '../lib/themes'
 import { todayString } from '../lib/date'
 
 export function Home({ deck, lang, langs, onStartSession, onStartProbe, onOpenCollection, onSwitchLang }: {
   deck: Deck
   lang: LangInfo
   langs: typeof LANGS
-  onStartSession: () => void
+  onStartSession: (theme: string | null) => void
   onStartProbe: () => void
   onOpenCollection: () => void
   onSwitchLang: (lang: string) => void
@@ -24,7 +25,13 @@ export function Home({ deck, lang, langs, onStartSession, onStartProbe, onOpenCo
 
   const vocab = estimatedVocab(profile, lang.code)
   const strong = strongCount(states, today)
-  const dueCount = useMemo(() => countDue(deck, states, today), [deck, states, today])
+  const [theme, setTheme] = useState('')
+  // The CTA's due count matches the scope the session will actually run in.
+  const scopedDeck = useMemo(
+    () => (theme ? { ...deck, items: deck.items.filter(it => it.theme === theme) } : deck),
+    [deck, theme],
+  )
+  const dueCount = useMemo(() => countDue(scopedDeck, states, today), [scopedDeck, states, today])
   const probed = profile.frontier[lang.code] !== undefined
 
   async function handleExport() {
@@ -91,9 +98,18 @@ export function Home({ deck, lang, langs, onStartSession, onStartProbe, onOpenCo
           )}
 
           <div className="home-primary">
-            <button className="cta" onClick={onStartSession}>
+            <button className="cta" onClick={() => onStartSession(theme || null)}>
               {dueCount === 0 ? 'Learn new words →' : `Start session — ${dueCount} due →`}
             </button>
+            <label className="course-switch">
+              Theme:{' '}
+              <select value={theme} onChange={e => setTheme(e.target.value)}>
+                <option value="">All words</option>
+                {THEMES.map(t => (
+                  <option key={t} value={t}>{THEME_LABEL[t]}</option>
+                ))}
+              </select>
+            </label>
             {probed && <button className="back" onClick={onStartProbe}>Re-run the probe</button>}
           </div>
         </>

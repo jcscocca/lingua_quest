@@ -5,8 +5,9 @@
 // cards.ts so this component only owns presentation and local answer state.
 
 import { useEffect, useMemo, useState } from 'react'
+import { otherSide, type ConfusablePair } from '../lib/confusables'
 import type { Deck, DeckItem } from '../lib/deck'
-import type { LangInfo } from '../lib/lang'
+import { langInfo, type LangInfo } from '../lib/lang'
 import type { TestMode } from '../lib/srs'
 import { choiceOptions, gradeCard } from '../lib/cards'
 import { speak, speechSupported } from '../lib/speech'
@@ -14,11 +15,12 @@ import { SpeakButton } from './SpeakButton'
 
 const MODE_LABEL: Record<TestMode, string> = { choice: 'Choice', type: 'Type', audio: 'Audio' }
 
-export function DeckCard({ deck, item, mode, lang, onGraded }: {
+export function DeckCard({ deck, item, mode, lang, confusables, onGraded }: {
   deck: Deck
   item: DeckItem
   mode: TestMode
   lang: LangInfo
+  confusables?: Map<string, ConfusablePair> | null
   onGraded: (correct: boolean) => void
 }) {
   // Keyed off item.id so a parent that reuses (rather than remounts) this
@@ -42,6 +44,8 @@ export function DeckCard({ deck, item, mode, lang, onGraded }: {
   }, [item.id, mode, lang.locale])
 
   const locked = result !== null
+  const pair = confusables?.get(item.id)
+  const friend = pair ? otherSide(pair, item.id) : null
 
   function submit() {
     if (locked) return
@@ -145,6 +149,11 @@ export function DeckCard({ deck, item, mode, lang, onGraded }: {
             <p className="reveal">
               <strong>{item.lemma}</strong> <SpeakButton text={item.lemma} voice={lang.locale} /> — {item.gloss.join(', ')}
             </p>
+            {friend && (
+              <p className="confusable">
+                🚧 False friend — {langInfo(friend.lang).name} <strong>{friend.side.lemma}</strong> means “{friend.side.gloss.join(', ')}”.
+              </p>
+            )}
             {item.ex && (
               <p className="reveal">
                 <em>{item.ex.t}</em> — {item.ex.en}

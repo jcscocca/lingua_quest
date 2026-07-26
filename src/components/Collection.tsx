@@ -1,13 +1,15 @@
 import { useMemo, useState } from 'react'
+import { otherSide, type ConfusablePair } from '../lib/confusables'
 import type { Deck, DeckItem } from '../lib/deck'
 import { useEngine } from '../lib/engine'
-import type { LangInfo } from '../lib/lang'
+import { langInfo, type LangInfo } from '../lib/lang'
 import type { ItemState } from '../lib/srs'
 import { SpeakButton } from './SpeakButton'
 
-export function Collection({ deck, lang, onBack }: {
+export function Collection({ deck, lang, confusables, onBack }: {
   deck: Deck
   lang: LangInfo
+  confusables?: Map<string, ConfusablePair> | null
   onBack: () => void
 }) {
   const states = useEngine(s => s.states)
@@ -45,7 +47,7 @@ export function Collection({ deck, lang, onBack }: {
 
       <div className="vocab-grid">
         {filtered.map(item => (
-          <VocabCard key={item.id} item={item} voice={lang.locale} state={states[item.id]} />
+          <VocabCard key={item.id} item={item} voice={lang.locale} state={states[item.id]} pair={confusables?.get(item.id)} />
         ))}
         {filtered.length === 0 && <p className="empty">No matches for “{q}”.</p>}
       </div>
@@ -53,13 +55,24 @@ export function Collection({ deck, lang, onBack }: {
   )
 }
 
-function VocabCard({ item, voice, state }: { item: DeckItem; voice: string; state: ItemState | undefined }) {
+function VocabCard({ item, voice, state, pair }: {
+  item: DeckItem
+  voice: string
+  state: ItemState | undefined
+  pair?: ConfusablePair
+}) {
+  const friend = pair ? otherSide(pair, item.id) : null
   return (
     <div className="vocab-card">
       <div className="vocab-es">
         {item.lemma} <SpeakButton text={item.lemma} voice={voice} />
       </div>
       <div className="vocab-en">{item.gloss.join(', ')}</div>
+      {friend && (
+        <div className="confusable">
+          🚧 {langInfo(friend.lang).flag} <strong>{friend.side.lemma}</strong> = {friend.side.gloss.join(', ')}
+        </div>
+      )}
       <div className="vocab-pos">{item.pos}</div>
       <div className="status">
         {!state ? (

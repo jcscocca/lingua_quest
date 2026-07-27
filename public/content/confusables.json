@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-26",
+ "generated": "2026-07-27",
  "pairs": [
   {
    "form": "acceder",
@@ -161,26 +161,6 @@
     "gloss": [
      "thin",
      "fine"
-    ]
-   }
-  },
-  {
-   "form": "hotel",
-   "es": {
-    "id": "es:hotel:noun",
-    "lemma": "hotel",
-    "pos": "noun",
-    "gloss": [
-     "hotel"
-    ]
-   },
-   "fr": {
-    "id": "fr:hôtel:noun",
-    "lemma": "hôtel",
-    "pos": "noun",
-    "gloss": [
-     "mansion",
-     "town house"
     ]
    }
   },

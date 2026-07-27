@@ -1286,5 +1286,248 @@
   "gloss": [
    "dog"
   ]
+ },
+ "detener": {
+  "pos": "verb",
+  "gloss": [
+   "to stop",
+   "to detain",
+   "to arrest"
+  ]
+ },
+ "oportunidad": {
+  "pos": "noun",
+  "gloss": [
+   "opportunity",
+   "chance"
+  ]
+ },
+ "extraño": {
+  "pos": "adj",
+  "gloss": [
+   "strange",
+   "odd",
+   "weird"
+  ]
+ },
+ "confiar": {
+  "pos": "verb",
+  "gloss": [
+   "to trust",
+   "to confide",
+   "to entrust"
+  ]
+ },
+ "noticia": {
+  "pos": "noun",
+  "gloss": [
+   "news",
+   "piece of news"
+  ]
+ },
+ "callar": {
+  "pos": "verb",
+  "gloss": [
+   "to be quiet",
+   "to shut up",
+   "to silence"
+  ]
+ },
+ "cuidar": {
+  "pos": "verb",
+  "gloss": [
+   "to take care of",
+   "to look after"
+  ]
+ },
+ "desaparecer": {
+  "pos": "verb",
+  "gloss": [
+   "to disappear",
+   "to vanish"
+  ]
+ },
+ "raro": {
+  "pos": "adj",
+  "gloss": [
+   "strange",
+   "odd",
+   "rare"
+  ]
+ },
+ "tirar": {
+  "pos": "verb",
+  "gloss": [
+   "to throw",
+   "to throw away",
+   "to pull"
+  ]
+ },
+ "principio": {
+  "pos": "noun",
+  "gloss": [
+   "beginning, start",
+   "principle"
+  ]
+ },
+ "través": {
+  "pos": "noun",
+  "gloss": [
+   "through, across (a través de)"
+  ]
+ },
+ "cuarto": {
+  "pos": "noun",
+  "gloss": [
+   "room",
+   "quarter"
+  ]
+ },
+ "evitar": {
+  "pos": "verb",
+  "gloss": [
+   "to avoid",
+   "to prevent"
+  ]
+ },
+ "cumplir": {
+  "pos": "verb",
+  "gloss": [
+   "to fulfill, to carry out",
+   "to comply",
+   "to turn a certain age"
+  ]
+ },
+ "cámara": {
+  "pos": "noun",
+  "gloss": [
+   "camera",
+   "chamber"
+  ]
+ },
+ "caballero": {
+  "pos": "noun",
+  "gloss": [
+   "gentleman",
+   "knight"
+  ]
+ },
+ "pena": {
+  "pos": "noun",
+  "gloss": [
+   "pity, shame",
+   "sorrow, grief",
+   "penalty"
+  ]
+ },
+ "reunir": {
+  "pos": "verb",
+  "gloss": [
+   "to gather, to bring together",
+   "to meet, to fulfill"
+  ]
+ },
+ "devolver": {
+  "pos": "verb",
+  "gloss": [
+   "to return, to give back",
+   "to pay back"
+  ]
+ },
+ "acompañar": {
+  "pos": "verb",
+  "gloss": [
+   "to accompany, to go with"
+  ]
+ },
+ "tienda": {
+  "pos": "noun",
+  "gloss": [
+   "shop, store",
+   "tent"
+  ]
+ },
+ "anterior": {
+  "pos": "adj",
+  "gloss": [
+   "previous, former",
+   "front"
+  ]
+ },
+ "gritar": {
+  "pos": "verb",
+  "gloss": [
+   "to shout, to yell",
+   "to scream"
+  ]
+ },
+ "revisar": {
+  "pos": "verb",
+  "gloss": [
+   "to check, to inspect",
+   "to review"
+  ]
+ },
+ "alejar": {
+  "pos": "verb",
+  "gloss": [
+   "to move away, to distance",
+   "to keep away"
+  ]
+ },
+ "depender": {
+  "pos": "verb",
+  "gloss": [
+   "to depend",
+   "to rely"
+  ]
+ },
+ "repetir": {
+  "pos": "verb",
+  "gloss": [
+   "to repeat",
+   "to have seconds"
+  ]
+ },
+ "engañar": {
+  "pos": "verb",
+  "gloss": [
+   "to deceive, to trick",
+   "to cheat on"
+  ]
+ },
+ "riesgo": {
+  "pos": "noun",
+  "gloss": [
+   "risk",
+   "danger"
+  ]
+ },
+ "nervioso": {
+  "pos": "adj",
+  "gloss": [
+   "nervous",
+   "on edge, jumpy"
+  ]
+ },
+ "culo": {
+  "pos": "noun",
+  "gloss": [
+   "butt, ass",
+   "bottom"
+  ]
+ },
+ "carajo": {
+  "pos": "noun",
+  "gloss": [
+   "damn, hell"
+  ]
+ },
+ "artículo": {
+  "pos": "noun",
+  "gloss": [
+   "article",
+   "item"
+  ]
  }
 }

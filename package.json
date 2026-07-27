@@ -9,7 +9,8 @@
     "test": "vitest run",
     "e2e": "playwright test",
     "validate": "tsx scripts/validate-deck.ts",
-    "apply:themes": "tsx scripts/apply-themes.ts",
+    "apply:content": "tsx scripts/apply-content.ts",
+    "build:examples": "tsx scripts/build-examples.ts",
     "build:confusables": "tsx scripts/build-confusables.ts",
     "build:deck": "tsx scripts/build-deck.ts",
     "build:deck:fr": "tsx scripts/build-deck-fr.ts"

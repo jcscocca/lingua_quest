@@ -26,7 +26,7 @@ export default defineConfig({
   webServer: {
     command: preview ? 'npm run preview' : 'npm run dev',
     url,
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
     timeout: 60_000,
   },
 })
